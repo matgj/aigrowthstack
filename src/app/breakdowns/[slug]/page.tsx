@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ExternalLink, TriangleAlert, Lightbulb } from "lucide-react";
 import { breakdowns, SNAPSHOT } from "@/data/breakdowns";
 import { ChannelBadge, CH } from "@/components/site/channel";
+import { LogoChip, img } from "@/components/site/media";
+import { IMAGES } from "@/data/images";
 import { Counter } from "@/components/site/counter";
 import { money } from "@/data/breakdowns";
 import { Reveal } from "@/components/site/reveal";
@@ -27,15 +29,24 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         <div className="grid-fade absolute inset-0" />
         <div className="relative grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
           <div>
-            <p className="text-sm font-medium text-white/80">{b.name} · {b.what}</p>
+            <div className="flex items-center gap-3"><LogoChip b={b} size="lg" /><p className="text-sm font-medium text-white/80">{b.name} · {b.what}</p></div>
             <h1 className="mt-2 max-w-2xl text-3xl font-semibold tracking-[-0.03em] text-balance sm:text-5xl">{b.title}</h1>
             <div className="mt-5 flex flex-wrap gap-1.5">{b.channels.map(c => <span key={c} className="rounded-full bg-white/15 px-2.5 py-1 text-xs font-medium backdrop-blur">{c}</span>)}</div>
           </div>
+          <div className="flex flex-col gap-3 md:w-[400px]">
+            {IMAGES[b.slug]?.cover && (
+              <div className="overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-white/30">
+                <div className="flex h-6 items-center gap-1 border-b border-neutral-200 bg-neutral-50 px-2.5"><span className="size-2 rounded-full bg-neutral-300" /><span className="size-2 rounded-full bg-neutral-300" /><span className="size-2 rounded-full bg-neutral-300" /></div>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={img(b.slug, "cover")} alt={`${b.name} website`} className="aspect-[1200/630] w-full object-cover object-top" />
+              </div>
+            )}
           <div className="rounded-2xl bg-white/12 p-5 ring-1 ring-white/20 backdrop-blur">
-            <p className="text-[11px] uppercase tracking-wider text-white/70">Verified MRR</p>
-            <p className="font-mono text-4xl font-semibold tracking-tight"><Counter value={b.mrr} kind="money" /></p>
-            <p className="mt-1 text-[11px] text-white/60">TrustMRR, {SNAPSHOT}</p>
-          </div>
+              <p className="text-[11px] uppercase tracking-wider text-white/70">Verified MRR</p>
+              <p className="font-mono text-4xl font-semibold tracking-tight"><Counter value={b.mrr} kind="money" /></p>
+              <p className="mt-1 text-[11px] text-white/60">TrustMRR, {SNAPSHOT}</p>
+            </div>
+</div>
         </div>
       </Reveal>
       {b.status && <div role="note" className="mt-4 rounded-2xl border border-neutral-300 bg-neutral-50 px-5 py-4 text-sm text-neutral-700"><span className="mr-2 rounded-full bg-neutral-900 px-2 py-0.5 text-[11px] font-semibold text-white">Shut down</span>{b.status.replace(/^Shut down: /, "")}</div>}

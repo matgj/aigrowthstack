@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { AnimatePresence, motion, LayoutGroup } from "motion/react";
 import { Search, X } from "lucide-react";
 import { breakdowns, CHANNELS, type Channel } from "@/data/breakdowns";
@@ -12,8 +12,9 @@ export function Explore() {
   const [q, setQ] = useState("");
   const [sort, setSort] = useState<Sort>("mrr");
   const PAGE = 12;
-  const [shown, setShown] = useState(PAGE);
-  useEffect(() => setShown(PAGE), [ch, q, sort]);
+  const key = `${ch}|${q}|${sort}`;
+  const [pg, setPg] = useState({ key, n: PAGE });
+  const shown = pg.key === key ? pg.n : PAGE;
   const list = useMemo(() => {
     const t = q.toLowerCase().trim();
     return breakdowns
@@ -60,7 +61,7 @@ export function Explore() {
           </motion.div>
           {list.length > shown && (
             <div className="mt-6 flex flex-col items-center gap-2">
-              <button onClick={() => setShown(s => s + PAGE)} className="h-10 rounded-full border border-neutral-200 bg-white px-5 text-sm font-medium shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">Load more</button>
+              <button onClick={() => setPg({ key, n: shown + PAGE })} className="h-10 rounded-full border border-neutral-200 bg-white px-5 text-sm font-medium shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">Load more</button>
               <p className="text-xs text-neutral-400">Showing {shown} of {list.length}</p>
             </div>
           )}

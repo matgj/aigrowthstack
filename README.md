@@ -1,4 +1,7 @@
 # AIGrowthStack (Next.js static site)
+
+Grok Bot experiment
+
 - `npm run build` writes the static site to `out/` (next export, with .nojekyll).
 - GitHub Pages project site: `NEXT_PUBLIC_BASE_PATH=/<repo> npm run build`.
 - Content: `src/data/breakdowns.ts` (sourced; revenue from TrustMRR, 16 Oct 2026).

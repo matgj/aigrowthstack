@@ -5,6 +5,8 @@ import { ArrowUpRight, TriangleAlert } from "lucide-react";
 import type { Breakdown } from "@/data/breakdowns";
 import { ChannelBadge, CH } from "./channel";
 import { Counter, money } from "./counter";
+import { Cover, LogoChip } from "./media";
+import { IMAGES } from "@/data/images";
 
 export function BreakdownCard({ b, rank }: { b: Breakdown; rank: number }) {
   return (
@@ -12,19 +14,15 @@ export function BreakdownCard({ b, rank }: { b: Breakdown; rank: number }) {
       transition={{ type: "spring", stiffness: 260, damping: 28, delay: (rank % 12) * .05 }} whileHover={{ y: -6 }} className="group relative">
       <div className={`pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-br ${CH[b.channels[0]].grad} opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-25`} />
       <Link href={`/breakdowns/${b.slug}/`} className="relative flex h-full flex-col rounded-2xl border border-neutral-200 bg-white p-3 shadow-[0_1px_2px_rgba(0,0,0,.04)] transition-shadow duration-300 group-hover:shadow-[0_20px_40px_-20px_rgba(0,0,0,.25)]">
-        <div className={`relative flex h-36 flex-col justify-between overflow-hidden rounded-xl bg-gradient-to-br ${CH[b.channels[0]].grad} p-4 text-white`}>
-          <div className="grid-fade absolute inset-0 opacity-70" />
-          <div className="relative flex items-center justify-between">
-            <span className="rounded-md bg-white/15 px-1.5 py-0.5 font-mono text-[10px] backdrop-blur">#{rank + 1}</span>
-            <ArrowUpRight className="size-4 opacity-0 transition group-hover:opacity-100" />
+        <Cover b={b} className="h-44 rounded-xl bg-neutral-100 ring-1 ring-black/5 text-white">
+          <div className="absolute inset-x-0 top-0 flex items-center justify-between p-3">
+            <span className="rounded-md bg-black/35 px-1.5 py-0.5 font-mono text-[10px] backdrop-blur">#{rank + 1}</span>
+            <span className="grid size-7 place-items-center rounded-full bg-white/90 text-neutral-900 opacity-0 transition group-hover:opacity-100"><ArrowUpRight className="size-4" /></span>
           </div>
-          <div className="relative">
-            <p className="text-[11px] uppercase tracking-wider text-white/70">Verified MRR</p>
-            <p className="font-mono text-3xl font-semibold tracking-tight"><Counter value={b.mrr} kind="money" /></p>
-          </div>
-        </div>
+          {IMAGES[b.slug]?.cover && <div className="absolute bottom-3 left-3"><LogoChip b={b} /></div>}
+        </Cover>
         <div className="flex flex-1 flex-col px-1 pb-1 pt-3">
-          <p className="flex items-center gap-2 text-sm font-semibold">{b.name}{b.status && <span className="rounded-full bg-neutral-100 px-2 py-0.5 text-[10px] font-medium text-neutral-600">Shut down</span>}</p>
+          <div className="flex items-baseline justify-between gap-3"><p className="flex items-center gap-2 text-sm font-semibold">{b.name}{b.status && <span className="rounded-full bg-neutral-100 px-2 py-0.5 text-[10px] font-medium text-neutral-600">Shut down</span>}</p><p className="font-mono text-lg font-semibold tracking-tight text-emerald-600"><Counter value={b.mrr} kind="money" /><span className="ml-1 font-sans text-[10px] font-normal text-neutral-400">MRR</span></p></div>
           <p className="mt-0.5 line-clamp-2 text-[15px] font-medium leading-snug tracking-tight text-neutral-800">{b.title}</p>
           <dl className="mt-3 space-y-1.5 text-xs">
             <div className="flex justify-between gap-3"><dt className="text-neutral-500">Founder</dt><dd className="text-right font-medium">{b.founder}</dd></div>
