@@ -9,7 +9,7 @@ import { Counter, money } from "./counter";
 export function BreakdownCard({ b, rank }: { b: Breakdown; rank: number }) {
   return (
     <motion.div layout initial={{ opacity: 0, y: 24, scale: .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, scale: .96, transition: { duration: .18 } }}
-      transition={{ type: "spring", stiffness: 260, damping: 28, delay: rank * .06 }} whileHover={{ y: -6 }} className="group relative">
+      transition={{ type: "spring", stiffness: 260, damping: 28, delay: (rank % 12) * .05 }} whileHover={{ y: -6 }} className="group relative">
       <div className={`pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-br ${CH[b.channels[0]].grad} opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-25`} />
       <Link href={`/breakdowns/${b.slug}/`} className="relative flex h-full flex-col rounded-2xl border border-neutral-200 bg-white p-3 shadow-[0_1px_2px_rgba(0,0,0,.04)] transition-shadow duration-300 group-hover:shadow-[0_20px_40px_-20px_rgba(0,0,0,.25)]">
         <div className={`relative flex h-36 flex-col justify-between overflow-hidden rounded-xl bg-gradient-to-br ${CH[b.channels[0]].grad} p-4 text-white`}>
@@ -24,7 +24,7 @@ export function BreakdownCard({ b, rank }: { b: Breakdown; rank: number }) {
           </div>
         </div>
         <div className="flex flex-1 flex-col px-1 pb-1 pt-3">
-          <p className="text-sm font-semibold">{b.name}</p>
+          <p className="flex items-center gap-2 text-sm font-semibold">{b.name}{b.status && <span className="rounded-full bg-neutral-100 px-2 py-0.5 text-[10px] font-medium text-neutral-600">Shut down</span>}</p>
           <p className="mt-0.5 line-clamp-2 text-[15px] font-medium leading-snug tracking-tight text-neutral-800">{b.title}</p>
           <dl className="mt-3 space-y-1.5 text-xs">
             <div className="flex justify-between gap-3"><dt className="text-neutral-500">Founder</dt><dd className="text-right font-medium">{b.founder}</dd></div>

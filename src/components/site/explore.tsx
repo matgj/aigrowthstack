@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion, LayoutGroup } from "motion/react";
 import { Search, X } from "lucide-react";
 import { breakdowns, CHANNELS, type Channel } from "@/data/breakdowns";
@@ -11,6 +11,9 @@ export function Explore() {
   const [ch, setCh] = useState<Channel | "All">("All");
   const [q, setQ] = useState("");
   const [sort, setSort] = useState<Sort>("mrr");
+  const PAGE = 12;
+  const [shown, setShown] = useState(PAGE);
+  useEffect(() => setShown(PAGE), [ch, q, sort]);
   const list = useMemo(() => {
     const t = q.toLowerCase().trim();
     return breakdowns
@@ -52,9 +55,15 @@ export function Explore() {
         <div className="p-4 sm:p-6">
           <motion.div layout className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <AnimatePresence mode="popLayout">
-              {list.map((b, i) => <BreakdownCard key={b.slug} b={b} rank={i} />)}
+              {list.slice(0, shown).map((b, i) => <BreakdownCard key={b.slug} b={b} rank={i} />)}
             </AnimatePresence>
           </motion.div>
+          {list.length > shown && (
+            <div className="mt-6 flex flex-col items-center gap-2">
+              <button onClick={() => setShown(s => s + PAGE)} className="h-10 rounded-full border border-neutral-200 bg-white px-5 text-sm font-medium shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">Load more</button>
+              <p className="text-xs text-neutral-400">Showing {shown} of {list.length}</p>
+            </div>
+          )}
           {list.length === 0 && <p className="py-16 text-center text-sm text-neutral-500">No breakdowns match. Try another channel or keyword.</p>}
         </div>
       </div>

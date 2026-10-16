@@ -38,6 +38,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           </div>
         </div>
       </Reveal>
+      {b.status && <div role="note" className="mt-4 rounded-2xl border border-neutral-300 bg-neutral-50 px-5 py-4 text-sm text-neutral-700"><span className="mr-2 rounded-full bg-neutral-900 px-2 py-0.5 text-[11px] font-semibold text-white">Shut down</span>{b.status.replace(/^Shut down: /, "")}</div>}
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_320px]">
         <div className="space-y-6">
