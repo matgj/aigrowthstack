@@ -7,3 +7,5 @@ Grok Bot experiment
 - Content: `src/data/breakdowns.ts` (sourced; revenue from TrustMRR, 16 Oct 2026).
 - Placeholders: the newsletter signup, the submit form and the sponsor email (`SPONSOR_EMAIL_PLACEHOLDER`) are not connected.
 - Screenshots: `npx serve out -l 4321` then `npm run shots`.
+
+Made by [@mathisgrosjean](https://x.com/mathisgrosjean).

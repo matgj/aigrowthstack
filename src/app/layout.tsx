@@ -10,6 +10,9 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 export const metadata: Metadata = {
   title: "AIGrowthStack: how AI startups with real revenue got their users",
   description: "Short, sourced breakdowns of how AI startups with verified revenue found their users. X, launches, cold outreach, SEO, AI search, YouTube and community.",
+  authors: [{ name: "Mathis Grosjean", url: "https://x.com/mathisgrosjean" }],
+  creator: "@mathisgrosjean",
+  twitter: { card: "summary_large_image", creator: "@mathisgrosjean" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
